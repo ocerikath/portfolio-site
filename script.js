@@ -102,8 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const fullText = data.reply;
                 
                 // Эффект печатающей машинки
+                textContainer.style.whiteSpace = "pre-wrap"; // Это сохранит все пробелы и переносы строк
                 for (let i = 0; i < fullText.length; i++) {
-                    textContainer.innerText += fullText.charAt(i);
+                    textContainer.textContent += fullText.charAt(i); // textContent надежнее, чем innerText
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                     await new Promise(r => setTimeout(r, 20)); 
                 }
