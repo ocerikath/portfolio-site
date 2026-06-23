@@ -98,15 +98,24 @@ document.addEventListener('DOMContentLoaded', () => {
             removeTyping();
             
             if (response.ok) {
-                const textContainer = addEmptyMessage();
                 const fullText = data.reply;
-                
-                // Эффект печатающей машинки
-                textContainer.style.whiteSpace = "pre-wrap"; // Это сохранит все пробелы и переносы строк
+
+                // Функция для обработки Markdown (жирный текст и ссылки)
+                const parseMarkdown = (text) => {
+                    return text
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Жирный
+                        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" class="text-accent-400 underline">$1</a>') // Ссылки
+                        .replace(/\n/g, '<br>'); // Переносы
+                };
+
+                // Эффект печати (теперь мы печатаем "сырой" текст, а рендерим его)
+                const textContainer = addEmptyMessage();
+                textContainer.style.whiteSpace = "pre-wrap";
+
                 for (let i = 0; i < fullText.length; i++) {
-                    textContainer.textContent += fullText.charAt(i); // textContent надежнее, чем innerText
+                    textContainer.innerHTML = parseMarkdown(fullText.substring(0, i + 1));
                     chatMessages.scrollTop = chatMessages.scrollHeight;
-                    await new Promise(r => setTimeout(r, 20)); 
+                    await new Promise(r => setTimeout(r, 15)); 
                 }
             } else {
                 throw new Error('Server error');
