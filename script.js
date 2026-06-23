@@ -39,6 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     };
 
+    // Создание пустого контейнера для "печатной машинки"
+    const addEmptyMessage = () => {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'flex items-start mb-4';
+        msgDiv.innerHTML = `<div class="bg-gray-700 text-white text-sm rounded-2xl px-4 py-2 max-w-[85%] shadow-sm"></div>`;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return msgDiv.querySelector('div');
+    };
+
     const showTyping = () => {
         const typingDiv = document.createElement('div');
         typingDiv.id = 'typing-indicator';
@@ -59,16 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typingIndicator) typingIndicator.remove();
     };
 
-    // Основной обработчик отправки формы с защитой от спама
+    // Основной обработчик отправки формы
     chatForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const text = chatInput.value.trim();
         if (!text) return;
 
-        // Защита от спама: не более 1 запроса в 5 секунд
+        // Защита от спама (5 секунд)
         const lastRequest = localStorage.getItem('lastReq');
         if (lastRequest && Date.now() - lastRequest < 5000) {
-            addMessage("Пожалуйста, подождите немного перед следующим вопросом.");
+            addMessage("Подождите немного...");
             return;
         }
 
@@ -88,7 +98,15 @@ document.addEventListener('DOMContentLoaded', () => {
             removeTyping();
             
             if (response.ok) {
-                addMessage(data.reply);
+                const textContainer = addEmptyMessage();
+                const fullText = data.reply;
+                
+                // Эффект печатающей машинки
+                for (let i = 0; i < fullText.length; i++) {
+                    textContainer.innerText += fullText.charAt(i);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    await new Promise(r => setTimeout(r, 20)); 
+                }
             } else {
                 throw new Error('Server error');
             }
