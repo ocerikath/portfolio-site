@@ -1,0 +1,302 @@
+/* Контейнер для вставки в существующий сайт */
+.cards-3d-container {
+    padding: 80px 0;
+    margin: 60px 0;
+    position: relative;
+}
+
+.cards-3d-wrapper {
+    max-width: auto;
+    margin: 0 auto;
+    padding: 0 6vw;
+}
+
+/* ===== Header ===== */
+.ba-head {
+    max-width: 900px;
+    margin: 0 auto 90px;
+    text-align: center;
+}
+
+.ba-head h2 {
+    font-size: clamp(36px, 5vw, 52px);
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.ba-head p {
+    font-size: 20px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.75);
+}
+
+.ba-head span {
+    color: #9f9bff;
+}
+
+/* Текстовая подсказка */
+.hint-text {
+    color: #ffffff;
+    margin-top: 30px;
+    padding: 12px 24px;
+    background: rgba(159, 155, 255, 0.1);
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    animation: fadeInUp 1s ease;
+    border: 1px solid rgba(159, 155, 255, 0.2);
+}
+
+.hint-icon {
+    font-size: 18px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Grid ===== */
+.ba-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 48px;
+    perspective: 1600px;
+}
+
+/* ===== Card Container ===== */
+.ba-card {
+    position: relative;
+    height: 260px;
+    border-radius: 28px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transform: rotateX(8deg) rotateY(-6deg);
+    transition: transform 0.6s ease;
+    /* Пульсация для привлечения внимания */
+    animation: hintPulse 3s ease-in-out 2;
+}
+
+@keyframes hintPulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(159, 155, 255, 0); 
+    }
+    50% { 
+        box-shadow: 0 0 0 8px rgba(159, 155, 255, 0.3); 
+    }
+}
+
+.ba-card:hover {
+    transform: rotateX(0deg) rotateY(0deg) scale(1.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Card Wrapper для 3D эффекта ===== */
+.ba-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(.4,.2,.2,1);
+    box-shadow: 
+        0 5px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Обе стороны должны быть абсолютно спозиционированы */
+.ba-side {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 32px;
+    border-radius: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.ba-before {
+    transform: rotateY(0deg);
+}
+
+.ba-after {
+    transform: rotateY(180deg);
+}
+
+/* ===== Уникальные цвета для каждой карточки ===== */
+/* Карточка 1 */
+.ba-card:nth-child(1) .ba-before {
+    background: linear-gradient(135deg, rgba(124, 124, 255, 0.15), rgba(124, 124, 255, 0.05));
+    border-color: rgba(124, 124, 255, 0.3);
+}
+.ba-card:nth-child(1) .ba-after {
+    background: linear-gradient(135deg, rgba(124, 124, 255, 0.6), rgba(70, 70, 180, 0.9));
+    border-color: rgba(124, 124, 255, 0.4);
+    box-shadow: inset 0 0 30px rgba(124, 124, 255, 0.3), 0 0 20px rgba(124, 124, 255, 0.2);
+}
+
+/* Карточка 2 */
+.ba-card:nth-child(2) .ba-before {
+    background: linear-gradient(135deg, rgba(0, 255, 213, 0.15), rgba(0, 255, 213, 0.05));
+    border-color: rgba(0, 255, 213, 0.3);
+}
+.ba-card:nth-child(2) .ba-after {
+    background: linear-gradient(135deg, rgba(0, 255, 213, 0.6), rgba(0, 180, 150, 0.9));
+    border-color: rgba(0, 255, 213, 0.4);
+    box-shadow: inset 0 0 30px rgba(0, 255, 213, 0.3), 0 0 20px rgba(0, 255, 213, 0.2);
+}
+
+/* Карточка 3 */
+.ba-card:nth-child(3) .ba-before {
+    background: linear-gradient(135deg, rgba(255, 122, 217, 0.15), rgba(255, 122, 217, 0.05));
+    border-color: rgba(255, 122, 217, 0.3);
+}
+.ba-card:nth-child(3) .ba-after {
+    background: linear-gradient(135deg, rgba(255, 122, 217, 0.6), rgba(180, 85, 150, 0.9));
+    border-color: rgba(255, 122, 217, 0.4);
+    box-shadow: inset 0 0 30px rgba(255, 122, 217, 0.3), 0 0 20px rgba(255, 122, 217, 0.2);
+}
+
+/* Карточка 4 */
+.ba-card:nth-child(4) .ba-before {
+    background: linear-gradient(135deg, rgba(255, 170, 0, 0.15), rgba(255, 170, 0, 0.05));
+    border-color: rgba(255, 170, 0, 0.3);
+}
+.ba-card:nth-child(4) .ba-after {
+    background: linear-gradient(135deg, rgba(255, 170, 0, 0.6), rgba(180, 120, 0, 0.9));
+    border-color: rgba(255, 170, 0, 0.4);
+    box-shadow: inset 0 0 30px rgba(255, 170, 0, 0.3), 0 0 20px rgba(255, 170, 0, 0.2);
+}
+
+/* Карточка 5 */
+.ba-card:nth-child(5) .ba-before {
+    background: linear-gradient(135deg, rgba(108, 255, 122, 0.15), rgba(108, 255, 122, 0.05));
+    border-color: rgba(108, 255, 122, 0.3);
+}
+.ba-card:nth-child(5) .ba-after {
+    background: linear-gradient(135deg, rgba(108, 255, 122, 0.6), rgba(75, 180, 85, 0.9));
+    border-color: rgba(108, 255, 122, 0.4);
+    box-shadow: inset 0 0 30px rgba(108, 255, 122, 0.3), 0 0 20px rgba(108, 255, 122, 0.2);
+}
+
+/* Карточка 6 */
+.ba-card:nth-child(6) .ba-before {
+    background: linear-gradient(135deg, rgba(0, 170, 255, 0.15), rgba(0, 170, 255, 0.05));
+    border-color: rgba(0, 170, 255, 0.3);
+}
+.ba-card:nth-child(6) .ba-after {
+    background: linear-gradient(135deg, rgba(0, 170, 255, 0.6), rgba(0, 120, 180, 0.9));
+    border-color: rgba(0, 170, 255, 0.4);
+    box-shadow: inset 0 0 30px rgba(0, 170, 255, 0.3), 0 0 20px rgba(0, 170, 255, 0.2);
+}
+
+/* Карточка 7 */
+.ba-card:nth-child(7) .ba-before {
+    background: linear-gradient(135deg, rgba(255, 85, 85, 0.15), rgba(255, 85, 85, 0.05));
+    border-color: rgba(255, 85, 85, 0.3);
+}
+.ba-card:nth-child(7) .ba-after {
+    background: linear-gradient(135deg, rgba(255, 85, 85, 0.6), rgba(180, 60, 60, 0.9));
+    border-color: rgba(255, 85, 85, 0.4);
+    box-shadow: inset 0 0 30px rgba(255, 85, 85, 0.3), 0 0 20px rgba(255, 85, 85, 0.2);
+}
+
+/* Карточка 8 */
+.ba-card:nth-child(8) .ba-before {
+    background: linear-gradient(135deg, rgba(179, 124, 255, 0.15), rgba(179, 124, 255, 0.05));
+    border-color: rgba(179, 124, 255, 0.3);
+}
+.ba-card:nth-child(8) .ba-after {
+    background: linear-gradient(135deg, rgba(179, 124, 255, 0.6), rgba(125, 85, 180, 0.9));
+    border-color: rgba(179, 124, 255, 0.4);
+    box-shadow: inset 0 0 30px rgba(179, 124, 255, 0.3), 0 0 20px rgba(179, 124, 255, 0.2);
+}
+
+/* ===== Состояния поворота ===== */
+.ba-card:hover .ba-card-inner,
+.ba-card.active .ba-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* ===== Text стили ===== */
+.ba-side h3 {
+    color: #ffffff;
+    font-size: 22px;
+    letter-spacing: 0.6px;
+    margin-bottom: 14px;
+    transform: translateZ(50px);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.ba-side p {
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 500;
+    color: rgba(255,255,255,0.95);
+    transform: translateZ(40px);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Улучшение рендеринга текста в 3D */
+.ba-side * {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 600px) {
+    .cards-3d-container {
+        padding: 40px 0;
+        margin: 30px 0;
+    }
+    
+    .cards-3d-wrapper {
+        padding: 0 4vw;
+    }
+    
+    .ba-card {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+    
+    .ba-grid {
+        gap: 32px;
+    }
+    
+    .ba-head {
+        margin-bottom: 60px;
+    }
+    
+    .hint-text {
+        font-size: 14px;
+        padding: 10px 16px;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .hint-icon {
+        font-size: 16px;
+    }
+}

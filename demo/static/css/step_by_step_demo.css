@@ -1,5 +1,5 @@
 .advantages {
-    padding: 60px 0;
+    padding: 160px 0 120px;
     background: radial-gradient(
         1200px 600px at 50% 0%,
         #0e1a35 0%,
@@ -410,7 +410,7 @@
 
 /* Иконки для каждого слайда */
 .adv-icon.slide1 {
-    background-image: url(../img/step_by_step/slide1.png);
+    background-image: url(img/slide1.png);
     width: 260px;
     height: 322px;
     bottom: -54px;
@@ -418,42 +418,42 @@
 }
 
 .adv-icon.slide2 { 
-    background-image: url("../img/step_by_step/slide2.png");
+    background-image: url("img/slide2.png");
     width: 216px;
     height: 322px;
     bottom: -72px;
     right: -24px;
 }
 .adv-icon.slide3 { 
-    background-image: url("../img/step_by_step/slide3.png");
+    background-image: url("img/slide3.png");
     width: 271px;
     height: 303px;
     bottom: -61px;
     right: -41px;
 }
 .adv-icon.slide4 { 
-    background-image: url("../img/step_by_step/slide4.png"); 
+    background-image: url("img/slide4.png"); 
     width: 216px;
     height: 322px;
     bottom: -67px;
     right: -20px;
 }
 .adv-icon.slide5 { 
-    background-image: url("../img/step_by_step/slide5.png");
+    background-image: url("img/slide5.png");
     width: 376px;
     height: 352px;
     bottom: -120px;
     right: -129px; 
 }
 .adv-icon.slide6 { 
-    background-image: url("../img/step_by_step/slide6.png"); 
+    background-image: url("img/slide6.png"); 
     width: 222px;
     height: 370px;
     bottom: -73px;
     right: 1px;
 }
 .adv-icon.slide7 { 
-    background-image: url("../img/step_by_step/slide7.png"); 
+    background-image: url("img/slide7.png"); 
     width: 268px;
     height: 324px;
     bottom: -88px;
@@ -466,10 +466,10 @@
     background: #040814;
 }
 
-.demo-scale {
-    width: 1920px;
-
-    transform: scale(0.26);
-
-    transform-origin: top left;
+.demo-showcase iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
 }
+
