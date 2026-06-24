@@ -1,0 +1,475 @@
+.advantages {
+    padding: 60px 0;
+    background: radial-gradient(
+        1200px 600px at 50% 0%,
+        #0e1a35 0%,
+        #060b1a 60%,
+        #040814 100%
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+.advantages-slider {
+    display: flex;
+    gap: 90px;
+    padding-left: 5%;
+    padding-top: 25px;
+    padding-right: 5%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+
+    cursor: grab;
+    overflow-y: hidden;
+}
+.advantages-slider.dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+}
+
+/* убираем стандартный скролл */
+.advantages-slider::-webkit-scrollbar {
+    display: none;
+}
+.advantages-slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+
+.adv-card {
+    position: relative;
+    width: 570px;
+    height: 380px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(46, 85, 165, 0.45), rgba(108, 73, 199, 0.35));
+    backdrop-filter: blur(18px);
+    border-radius: 28px;
+    padding: 48px;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    transition: transform 0.4s ease, opacity 0.6s ease;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.adv-card img.adv-img {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 120px; /* можно менять размер */
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+    opacity: 0.85; /* лёгкая прозрачность */
+    z-index: -13;
+}
+
+/* Ссылки в нижнем левом углу */
+.adv-card .adv-link {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.adv-card .adv-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.adv-card .adv-link:hover {
+    color: #2b5cff;
+}
+
+.adv-link svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor; /* стрелка меняет цвет вместе с текстом */
+}
+
+.adv-card:hover {
+    transform: scale(1.1); /* Просто увеличиваем на 10% */
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+                0 0 40px rgba(110, 168, 255, 0.3);
+    z-index: 100;
+}
+
+.adv-content h3 {
+    font-size: 28px;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+.adv-content p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.adv-line {
+    position: absolute;
+    bottom: 56px; /* было 24px — поднимаем выше */
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        rgba(110, 168, 255, 0.0),
+        #6ea8ff,
+        #9b7bff,
+        rgba(155, 123, 255, 0.0)
+    );
+
+    opacity: 0.65;
+    z-index: -20;
+}
+
+
+.advantages-slider.dragging .adv-card {
+    pointer-events: none;
+}
+.advantages,
+.advantages * {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+
+
+
+
+
+/* ИНФО-БЛОК */
+/* убираем стандартный скролл */
+.advantages-slider::-webkit-scrollbar {
+    display: none;
+}
+.advantages-slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+
+.adv-card {
+    position: relative;
+    width: 570px;
+    height: 380px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(46, 85, 165, 0.45), rgba(108, 73, 199, 0.35));
+    backdrop-filter: blur(18px);
+    border-radius: 28px;
+    padding: 48px;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    transition: transform 0.4s ease, opacity 0.6s ease, box-shadow 0.4s ease;
+    overflow: hidden;
+}
+
+
+/* Ссылки в нижнем левом углу */
+.adv-card .adv-link {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.adv-card .adv-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.adv-card .adv-link:hover {
+    color: #2b5cff;
+}
+
+.adv-link svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor; /* стрелка меняет цвет вместе с текстом */
+}
+
+.adv-card:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+}
+
+.adv-content h3 {
+    font-size: 28px;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+.adv-content p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.adv-line {
+    position: absolute;
+    bottom: 56px; /* было 24px — поднимаем выше */
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        rgba(110, 168, 255, 0.0),
+        #6ea8ff,
+        #9b7bff,
+        rgba(155, 123, 255, 0.0)
+    );
+
+    opacity: 0.85;
+}
+
+
+.advantages-slider.dragging .adv-card {
+    pointer-events: none;
+}
+.advantages,
+.advantages * {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+
+
+
+
+
+/* ИНФО-БЛОК */
+.advantages-info {
+    margin-top: 160px;
+    padding: 0 10%;
+}
+
+.advantages-info h2 {
+    font-size: 48px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 64px;
+}
+
+.ai-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px; /* перегородки */
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    overflow: hidden;
+}
+
+.ai-cell {
+    padding: 40px 36px;
+    min-height: 180px;
+
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    transition: background 0.4s ease, transform 0.4s ease;
+}
+
+.ai-cell h3 {
+    font-size: 22px;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.ai-cell p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.ai-cell:hover {
+    transform: translateY(-6px);
+}
+
+.ai-cell.blue:hover {
+    background: rgba(110, 168, 255, 0.25);
+}
+
+.ai-cell.violet:hover {
+    background: rgba(155, 123, 255, 0.25);
+}
+
+.ai-cell.cyan:hover {
+    background: rgba(80, 200, 220, 0.25);
+}
+
+.ai-cell.green:hover {
+    background: rgba(120, 220, 160, 0.25);
+}
+
+.ai-cell.pink:hover {
+    background: rgba(220, 120, 200, 0.25);
+}
+
+.ai-cell.orange:hover {
+    background: rgba(255, 170, 90, 0.25);
+}
+
+/* ЭФФЕКТЫ ФОНА */
+.neural-bg {
+    position: absolute;
+    inset: 0; /* растягивает на всю секцию */
+    width: 100%;
+    height: 100%; /* теперь фон тянется на всю секцию */
+    pointer-events: none;
+    overflow: visible;
+    z-index: 0;
+}
+
+.neural-flow path {
+    fill: none;
+    stroke: url(#neuralGradient);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.6;
+
+    stroke-dasharray: 6 10;
+    animation: neuralMove 8s linear infinite;
+    filter: drop-shadow(0 0 6px rgba(110,168,255,0.6));
+}
+
+@keyframes neuralMove {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 160;
+    }
+}
+.advantages > *:not(.neural-bg) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Общая анимация для слайдов */
+.advantages-slider.animate .adv-card {
+    opacity: 0;
+    transform: translateX(-50px) translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Активные слайды после запуска анимации */
+.advantages-slider.animate .adv-card.visible {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+}
+
+/* НОВЫЙ СТИЛЬ ДЛЯ ИКОНОК */
+.adv-icon {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 180px;
+    height: 180px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.85;
+    z-index: 0;
+    transition: opacity 0.3s ease;
+}
+
+.adv-card:hover .adv-icon {
+    opacity: 0.95;
+}
+
+/* Иконки для каждого слайда */
+.adv-icon.slide1 {
+    background-image: url(../img/step_by_step/slide1.png);
+    width: 260px;
+    height: 322px;
+    bottom: -54px;
+    right: -36px;
+}
+
+.adv-icon.slide2 { 
+    background-image: url("../img/step_by_step/slide2.png");
+    width: 216px;
+    height: 322px;
+    bottom: -72px;
+    right: -24px;
+}
+.adv-icon.slide3 { 
+    background-image: url("../img/step_by_step/slide3.png");
+    width: 271px;
+    height: 303px;
+    bottom: -61px;
+    right: -41px;
+}
+.adv-icon.slide4 { 
+    background-image: url("../img/step_by_step/slide4.png"); 
+    width: 216px;
+    height: 322px;
+    bottom: -67px;
+    right: -20px;
+}
+.adv-icon.slide5 { 
+    background-image: url("../img/step_by_step/slide5.png");
+    width: 376px;
+    height: 352px;
+    bottom: -120px;
+    right: -129px; 
+}
+.adv-icon.slide6 { 
+    background-image: url("../img/step_by_step/slide6.png"); 
+    width: 222px;
+    height: 370px;
+    bottom: -73px;
+    right: 1px;
+}
+.adv-icon.slide7 { 
+    background-image: url("../img/step_by_step/slide7.png"); 
+    width: 268px;
+    height: 324px;
+    bottom: -88px;
+    right: -1px;
+}
+
+.demo-showcase {
+    height: 500px;
+    overflow: hidden;
+    background: #040814;
+}
+
+.demo-scale {
+    width: 1920px;
+
+    transform: scale(0.26);
+
+    transform-origin: top left;
+}
