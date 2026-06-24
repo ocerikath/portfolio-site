@@ -1,3 +1,16 @@
+html {
+    scrollbar-width: none; /* Firefox */
+}
+
+body {
+    scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Edge, Safari */
+}
+
 .advantages {
     padding: 160px 0 120px;
     background: radial-gradient(
@@ -461,7 +474,7 @@
 }
 
 .demo-showcase {
-    height: 500px;
+    height: 1000px;
     overflow: hidden;
     background: #040814;
 }
@@ -470,6 +483,169 @@
     width: 100%;
     height: 100%;
     border: none;
-    display: block;
+    overflow: hidden;
 }
 
+/* ==========================================================================
+   АДАПТИВ ДЛЯ СЕКЦИИ ИИ
+   ========================================================================== */
+
+/* Планшеты (горизонтальные и вертикальные) */
+@media (max-width: 1024px) {
+    .advantages-info {
+        margin-top: 100px; /* Уменьшаем гигантский отступ сверху */
+        padding: 0 5%;    /* Чуть расширяем контентную зону */
+    }
+
+    .advantages-info h2 {
+        font-size: 38px;   /* Уменьшаем заголовок */
+        margin-bottom: 40px;
+    }
+
+    .ai-grid {
+        grid-template-columns: repeat(2, 1fr); /* Перестраиваем в 2 колонки */
+    }
+}
+
+/* Мобильные телефоны */
+@media (max-width: 650px) {
+    .advantages-info {
+        margin-top: 60px;  /* Ещё меньше отступ на мобилках */
+        padding: 0 16px;   /* Стандартные мобильные паддинги от краев экрана */
+    }
+
+    .advantages-info h2 {
+        font-size: 28px;   /* Компактный заголовок для телефона */
+        margin-bottom: 24px;
+    }
+
+    .ai-grid {
+        grid-template-columns: 1fr; /* Всё встает строго в одну колонку */
+        border-radius: 20px;         /* Чуть скругляем общие углы, чтобы смотрелось аккуратнее */
+    }
+
+    .ai-cell {
+        padding: 24px 20px; /* Уменьшаем внутренние паддинги в карточках */
+        min-height: auto;   /* Убираем жесткую минимальную высоту, пусть тянется по контенту */
+    }
+
+    .ai-cell h3 {
+        font-size: 18px;    /* Слегка уменьшаем шрифты */
+        margin-bottom: 8px;
+    }
+
+    .ai-cell p {
+        font-size: 14px;
+    }
+
+    /* На тач-устройствах ховер-эффект сдвига (translateY) может залипать при скролле, 
+       поэтому на мобилках его лучше отключить для плавности */
+    .ai-cell:hover {
+        transform: none;
+    }
+}
+
+
+
+
+/* ==========================================================================
+   АДАПТИВ ДЛЯ СЛАЙДЕРА (ADVANTAGES SLIDER)
+   ========================================================================== */
+
+/* Планшеты (до 1024px) */
+@media (max-width: 1024px) {
+    .advantages {
+        padding: 100px 0 80px; /* Уменьшаем гигантские вертикальные паддинги секции */
+    }
+
+    .advantages-slider {
+        gap: 40px;          /* Сближаем карточки (было 90px) */
+        padding-top: 15px;
+    }
+
+    .adv-card {
+        width: 460px;       /* Сужаем карточки для планшета */
+        height: 340px;      /* Немного уменьшаем высоту */
+        padding: 36px;      /* Компактные внутренние отступы */
+    }
+
+    .adv-content h3 {
+        font-size: 24px;    /* Корректируем шрифты */
+    }
+
+    .adv-content p {
+        font-size: 16px;
+    }
+
+    /* Масштабируем фоновые картинки, чтобы они не лезли на текст */
+    .adv-icon {
+        transform: scale(0.85);
+        transform-origin: bottom right;
+    }
+}
+
+/* Мобильные телефоны (до 650px) */
+@media (max-width: 650px) {
+    .advantages {
+        padding: 60px 0 50px;
+    }
+
+    .advantages-slider {
+        gap: 20px;          /* Минимальный комфортный зазор на мобилках */
+        padding-left: 16px;  /* Отступ первого слайда от левого края экрана */
+        padding-right: 16px; /* Отступ последнего слайда, чтобы скролл не обрывался резко */
+    }
+
+    .adv-card {
+        /* Идеальное решение для мобильного скролла: карточка занимает 
+           почти всю ширину экрана, оставляя виден хвостик следующей карточки */
+        width: calc(100vw - 52px); 
+        height: 300px;      /* Компактная высота под мобильный экран */
+        padding: 24px;      /* Плотные паддинги */
+        border-radius: 20px;
+    }
+
+    /* Отключаем desktop-ховер масштабирования на мобилках, чтобы избежать 
+       залипания карточки при скролле пальцем */
+    .adv-card:hover {
+        transform: none;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .adv-content h3 {
+        font-size: 20px;    /* Читабельный размер для телефона */
+        margin-bottom: 10px;
+        padding-right: 40px; /* Чтобы текст не наезжал на картинку, если она высокая */
+    }
+
+    .adv-content p {
+        font-size: 14px;
+        line-height: 1.4;
+        width: 85%;         /* Ограничиваем ширину текста, освобождая правый угол для иконки */
+    }
+
+    .adv-line {
+        bottom: 48px;       /* Слегка корректируем декоративную линию */
+    }
+
+    .adv-card .adv-link {
+        font-size: 14px;    /* Делаем ссылку "Подробнее" чуть аккуратнее */
+        bottom: 16px;
+        left: 24px;
+    }
+
+    /* ===== Экстремальное выравнивание фоновых иконок для мобилок ===== */
+    /* Уменьшаем иконки и прижимаем их плотно к углам, чтобы они служили именно фоном */
+    .adv-icon {
+        transform: scale(0.55);
+        transform-origin: bottom right;
+        bottom: 10px !important;
+        right: 10px !important;
+        opacity: 0.5;       /* Снижаем прозрачность на мобильных для лучшей читаемости текста */
+    }
+
+    /* Персональные корректировки для самых проблемных/больших картинок */
+    .adv-icon.slide1 { right: -20px !important; bottom: -20px !important; }
+    .adv-icon.slide3 { right: -30px !important; }
+    .adv-icon.slide5 { right: -60px !important; bottom: -40px !important; }
+}
