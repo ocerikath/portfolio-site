@@ -150,3 +150,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+
+
+const chatTooltip = document.getElementById('chat-tooltip');
+const closeTooltipBtn = document.getElementById('close-tooltip-btn');
+const chatToggleBtn = document.getElementById('chat-toggle-btn');
+
+// Функция скрытия подсказки
+function hideTooltip() {
+    if (chatTooltip) {
+        chatTooltip.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+        // Полностью удаляем из разметки через полсекунды после анимации затухания
+        setTimeout(() => chatTooltip.remove(), 300);
+    }
+}
+
+// Скрываем при клике на крестик на самом облачке
+if (closeTooltipBtn) {
+    closeTooltipBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Чтобы не срабатывал клик по кнопке чата
+        hideTooltip();
+    });
+}
+
+// Скрываем при открытии чата
+if (chatToggleBtn) {
+    chatToggleBtn.addEventListener('click', () => {
+        hideTooltip();
+    });
+}
