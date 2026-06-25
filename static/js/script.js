@@ -187,13 +187,31 @@ const ideData = [
         filename: "automation.py",
         code: `<span class="text-purple-400">import</span> openai, asyncio\n\n<span class="text-blue-400">async def</span> <span class="text-green-400">integrate_ai</span>():\n    agent = AIAgent(role=<span class="text-orange-400">"RAG"</span>)\n    <span class="text-purple-400">await</span> agent.start_pipeline()\n    <span class="text-gray-500"># Снижаем рутину бизнеса на 80%</span>\n    print(<span class="text-orange-400">"System: Optimized! ✅"</span>)`
     },
+    
     {
         filename: "index.html",
         code: `<span class="text-gray-500">&lt;!-- Landing Hero --&gt;</span>\n<span class="text-red-400">&lt;section</span> <span class="text-yellow-400">class</span>=<span class="text-orange-400">"grid gap-8"</span><span class="text-red-400">&gt;</span>\n  <span class="text-red-400">&lt;h1&gt;</span>AI Automation Engineer<span class="text-red-400">&lt;/h1&gt;</span>\n  <span class="text-red-400">&lt;div</span> <span class="text-yellow-400">id</span>=<span class="text-orange-400">"app"</span><span class="text-red-400">&gt;&lt;/div&gt;</span>\n<span class="text-red-400">&lt;/section&gt;</span>`
     },
+
     {
         filename: "agent.js",
         code: `<span class="text-purple-400">const</span> deployButton = document.<span class="text-blue-400">querySelector</span>(<span class="text-orange-400">'.btn'</span>);\n\ndeployButton.<span class="text-blue-400">addEventListener</span>(<span class="text-orange-400">'click'</span>, () => {\n  <span class="text-purple-400">const</span> success = workflow.<span class="text-blue-400">launch</span>();\n  <span class="text-purple-400">if</span> (success) <span class="text-blue-400">console.log</span>(<span class="text-orange-400">'Deployed successfully!'</span>);\n});`
+    },
+
+
+    {
+        filename: "ai_agent.py",
+        code: `<span class="text-purple-400">from</span> langchain <span class="text-purple-400">import</span> OpenAI, RAG_Pipeline\n\n<span class="text-blue-400">def</span> <span class="text-green-400">analyze_document</span>(file_path):\n    llm = DeepSeek(model=<span class="text-orange-400">"reasoning"</span>, temp=<span class="text-orange-400">0.2</span>)\n    ctx = RAG_Pipeline.load_embeddings(file_path)\n    \n    <span class="text-purple-400">return</span> llm.generate_summary(context=ctx)\n\n<span class="text-gray-500"># Сгенерирован краткий отчет по BigData 📊</span>`
+    },
+
+    {
+        filename: "n8n_webhook.py",
+        code: `<span class="text-purple-400">import</span> requests, json\n\n<span class="text-blue-400">def</span> <span class="text-green-400">trigger_automation</span>(payload):\n    webhook_url = <span class="text-orange-400">"https://n8n.internal/v1/webhook"</span>\n    headers = {<span class="text-orange-400">"Content-Type"</span>: <span class="text-orange-400">"application/json"</span>}\n    \n    res = requests.post(webhook_url, json=payload)\n    <span class="text-purple-400">if</span> res.status_code == <span class="text-orange-400">200</span>:\n        print(<span class="text-orange-400">"Telegram Broadcast Sent! 🚀"</span>)`
+    },
+
+    {
+        filename: "GlassEffect.css",
+        code: `<span class="text-yellow-400">.premium-card</span> {\n  <span class="text-blue-400">background</span>: <span class="text-orange-400">rgba(255, 255, 255, 0.05)</span>;\n  <span class="text-blue-400">backdrop-filter</span>: <span class="text-purple-400">blur</span>(<span class="text-orange-400">12px</span>);\n  <span class="text-blue-400">-webkit-backdrop-filter</span>: <span class="text-purple-400">blur</span>(<span class="text-orange-400">12px</span>);\n  <span class="text-blue-400">border</span>: <span class="text-orange-400">1px solid rgba(255, 255, 255, 0.1)</span>;\n  <span class="text-blue-400">box-shadow</span>: <span class="text-orange-400">0 8px 32px 0 rgba(0, 0, 0, 0.3)</span>;\n}`
     }
 ];
 
