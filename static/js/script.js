@@ -180,3 +180,103 @@ if (chatToggleBtn) {
         hideTooltip();
     });
 }
+
+
+const ideData = [
+    {
+        filename: "automation.py",
+        code: `<span class="text-purple-400">import</span> openai, asyncio\n\n<span class="text-blue-400">async def</span> <span class="text-green-400">integrate_ai</span>():\n    agent = AIAgent(role=<span class="text-orange-400">"RAG"</span>)\n    <span class="text-purple-400">await</span> agent.start_pipeline()\n    <span class="text-gray-500"># Снижаем рутину бизнеса на 80%</span>\n    print(<span class="text-orange-400">"System: Optimized! ✅"</span>)`
+    },
+    {
+        filename: "index.html",
+        code: `<span class="text-gray-500">&lt;!-- Landing Hero --&gt;</span>\n<span class="text-red-400">&lt;section</span> <span class="text-yellow-400">class</span>=<span class="text-orange-400">"grid gap-8"</span><span class="text-red-400">&gt;</span>\n  <span class="text-red-400">&lt;h1&gt;</span>AI Automation Engineer<span class="text-red-400">&lt;/h1&gt;</span>\n  <span class="text-red-400">&lt;div</span> <span class="text-yellow-400">id</span>=<span class="text-orange-400">"app"</span><span class="text-red-400">&gt;&lt;/div&gt;</span>\n<span class="text-red-400">&lt;/section&gt;</span>`
+    },
+    {
+        filename: "agent.js",
+        code: `<span class="text-purple-400">const</span> deployButton = document.<span class="text-blue-400">querySelector</span>(<span class="text-orange-400">'.btn'</span>);\n\ndeployButton.<span class="text-blue-400">addEventListener</span>(<span class="text-orange-400">'click'</span>, () => {\n  <span class="text-purple-400">const</span> success = workflow.<span class="text-blue-400">launch</span>();\n  <span class="text-purple-400">if</span> (success) <span class="text-blue-400">console.log</span>(<span class="text-orange-400">'Deployed successfully!'</span>);\n});`
+    }
+];
+
+const codeElem = document.getElementById('ide-code');
+const fileElem = document.getElementById('ide-filename');
+
+let currentSnippetIndex = 0;
+let isDeleting = false;
+let displayedText = "";
+let rawTokens = [];
+let currentTokenIndex = 0;
+let charIndex = 0;
+
+// Парсинг HTML-строк кода на массив токенов (обычный текст или HTML-тег), чтобы анимация не ломала теги подсветки
+function tokenize(htmlString) {
+    const tokens = [];
+    let i = 0;
+    while (i < htmlString.length) {
+        if (htmlString[i] === '<') {
+            let end = htmlString.indexOf('>', i);
+            if (end !== -1) {
+                tokens.push({ type: 'tag', value: htmlString.substring(i, end + 1) });
+                i = end + 1;
+                continue;
+            }
+        }
+        tokens.push({ type: 'char', value: htmlString[i] });
+        i++;
+    }
+    return tokens;
+}
+
+function typeEffect() {
+    const currentSnippet = ideData[currentSnippetIndex];
+    fileElem.textContent = currentSnippet.filename;
+
+    if (!isDeleting && charIndex === 0 && currentTokenIndex === 0) {
+        rawTokens = tokenize(currentSnippet.code);
+    }
+
+    if (!isDeleting) {
+        // Печать
+        if (currentTokenIndex < rawTokens.length) {
+            const token = rawTokens[currentTokenIndex];
+            if (token.type === 'tag') {
+                displayedText += token.value;
+                currentTokenIndex++;
+                typeEffect(); // Мгновенно обрабатываем HTML-тег без задержки
+            } else {
+                displayedText += token.value;
+                currentTokenIndex++;
+                charIndex++;
+                codeElem.innerHTML = displayedText + '<span class="animate-pulse text-accent-500">|</span>';
+                setTimeout(typeEffect, Math.random() * 20 + 20); // Реалистичная скорость печати
+            }
+        } else {
+            // Пауза после завершения печати текста
+            isDeleting = true;
+            setTimeout(typeEffect, 2500);
+        }
+    } else {
+        // Удаление кода (происходит быстрее, целыми токенами)
+        if (rawTokens.length > 0) {
+            let lastToken = rawTokens.pop();
+            // Если удалили текстовый символ, обновляем счетчик
+            if (lastToken.type === 'char') charIndex--;
+            
+            // Восстанавливаем строку из оставшихся токенов
+            displayedText = rawTokens.map(t => t.value).join('');
+            codeElem.innerHTML = displayedText + '<span class="animate-pulse text-accent-500">|</span>';
+            setTimeout(typeEffect, 10);
+        } else {
+            // Переход к следующему языку
+            isDeleting = false;
+            currentTokenIndex = 0;
+            charIndex = 0;
+            currentSnippetIndex = (currentSnippetIndex + 1) % ideData.length;
+            setTimeout(typeEffect, 500);
+        }
+    }
+}
+
+// Запуск при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+    typeEffect();
+});
