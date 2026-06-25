@@ -184,34 +184,28 @@ if (chatToggleBtn) {
 
 const ideData = [
     {
-        filename: "automation.py",
-        code: `<span class="text-purple-400">import</span> openai, asyncio\n\n<span class="text-blue-400">async def</span> <span class="text-green-400">integrate_ai</span>():\n    agent = AIAgent(role=<span class="text-orange-400">"RAG"</span>)\n    <span class="text-purple-400">await</span> agent.start_pipeline()\n    <span class="text-gray-500"># Снижаем рутину бизнеса на 80%</span>\n    print(<span class="text-orange-400">"System: Optimized! ✅"</span>)`
+        filename: "ai_rag_agent.py",
+        code: `<span class="text-purple-400">import</span> os, asyncio\n<span class="text-purple-400">from</span> google <span class="text-purple-400">import</span> genai\n<span class="text-purple-400">from</span> db <span class="text-purple-400">import</span> VectorStore\n\n<span class="text-blue-400">async def</span> <span class="text-green-400">process_knowledge_base</span>(user_query: <span class="text-orange-400">str</span>):\n    ai_client = genai.Client(api_key=os.getenv(<span class="text-orange-400">"GEMINI_API_KEY"</span>))\n    vectordb = VectorStore(collection=<span class="text-orange-400">"documents"</span>)\n    \n    <span class="text-gray-500"># Поиск релевантного контекста для RAG</span>\n    context = <span class="text-purple-400">await</span> vectordb.search(user_query, limit=<span class="text-orange-400">3</span>)\n    prompt = <span class="text-orange-400">f"Context: {context}\\n\\nQuery: {user_query}"</span>\n    \n    response = <span class="text-purple-400">await</span> ai_client.models.generate_content(\n        model=<span class="text-orange-400">"gemini-2.5-flash"</span>,\n        contents=prompt\n    )\n    <span class="text-purple-400">return</span> response.text`
     },
-    
+    {
+        filename: "n8n_pipeline.py",
+        code: `<span class="text-purple-400">import</span> requests, json\n<span class="text-purple-400">from</span> fastapi <span class="text-purple-400">import</span> FastAPI, HTTPException\n\napp = FastAPI(title=<span class="text-orange-400">"AutomationBridge"</span>)\n\n<span class="text-purple-400">@app</span>.post(<span class="text-orange-400">"/v1/webhook/habr-sync"</span>)\n<span class="text-blue-400">def</span> <span class="text-green-400">sync_rss_to_telegram</span>(payload: <span class="text-orange-400">dict</span>):\n    n8n_webhook = <span class="text-orange-400">"https://n8n.internal/flow/v12"</span>\n    \n    <span class="text-purple-400">try</span>:\n        <span class="text-gray-500"># Перенаправляем разобранные данные в воркфлоу</span>\n        res = requests.post(n8n_webhook, json=payload, timeout=<span class="text-orange-400">5</span>)\n        res.raise_for_status()\n        <span class="text-purple-400">return</span> {<span class="text-orange-400">"status"</span>: <span class="text-orange-400">"dispatched"</span>, <span class="text-orange-400">"id"</span>: res.json().get(<span class="text-orange-400">"id"</span>)}\n    <span class="text-purple-400">except</span> requests.RequestException <span class="text-purple-400">as</span> err:\n        <span class="text-purple-400">raise</span> HTTPException(status_code=<span class="text-orange-400">500</span>, detail=str(err))`
+    },
+    {
+        filename: "stream_chat.js",
+        code: `<span class="text-purple-400">async function</span> <span class="text-green-400">fetchAiStream</span>(promptMessage) {\n  <span class="text-purple-400">const</span> response = <span class="text-purple-400">await</span> <span class="text-blue-400">fetch</span>(<span class="text-orange-400">'/api/chat/stream'</span>, {\n    method: <span class="text-orange-400">'POST'</span>,\n    body: JSON.<span class="text-blue-400">stringify</span>({ message: promptMessage })\n  });\n\n  <span class="text-purple-400">const</span> reader = response.body.<span class="text-blue-400">getReader</span>();\n  <span class="text-purple-400">const</span> decoder = <span class="text-blue-400">new</span> <span class="text-green-400">TextDecoder</span>();\n  \n  <span class="text-purple-400">while</span> (<span class="text-orange-400">true</span>) {\n    <span class="text-purple-400">const</span> { value, done } = <span class="text-purple-400">await</span> reader.<span class="text-blue-400">read</span>();\n    <span class="text-purple-400">if</span> (done) <span class="text-purple-400">break</span>;\n    \n    <span class="text-purple-400">const</span> chunk = decoder.<span class="text-blue-400">decode</span>(value, { stream: <span class="text-orange-400">true</span> });\n    appendMessageChunk(chunk); <span class="text-gray-500">// Живой вывод UI ассистента</span>\n  }\n}`
+    },
+    {
+        filename: "telegram_bot.py",
+        code: `<span class="text-purple-400">from</span> aiogram <span class="text-purple-400">import</span> Bot, Dispatcher, types\n<span class="text-purple-400">from</span> handlers <span class="text-purple-400">import</span> doc_analyzer\n\nbot = Bot(token=os.getenv(<span class="text-orange-400">"TELEGRAM_BOT_TOKEN"</span>))\ndp = Dispatcher()\n\n<span class="text-purple-400">@dp</span>.message(types.ContentType.DOCUMENT)\n<span class="text-blue-400">async def</span> <span class="text-green-400">handle_user_document</span>(message: types.Message):\n    <span class="text-gray-500"># Бот принимает файл из Google Drive или локально</span>\n    await message.reply(<span class="text-orange-400">"Анализирую документ... ⏳"</span>)\n    summary = <span class="text-purple-400">await</span> doc_analyzer.summarize(message.document)\n    \n    <span class="text-purple-400">await</span> message.reply_document(summary, caption=<span class="text-orange-400">"Готово!"</span>)\n\n<span class="text-purple-400">if</span> __name__ == <span class="text-orange-400">"__main__"</span>:\n    dp.run_polling(bot)`
+    },
+    {
+        filename: "LiquidGlass.css",
+        code: `<span class="text-yellow-400">.liquid-glass-card</span> {\n  <span class="text-blue-400">background</span>: <span class="text-orange-400">rgba(255, 255, 255, 0.03)</span>;\n  <span class="text-blue-400">backdrop-filter</span>: <span class="text-purple-400">blur</span>(<span class="text-orange-400">16px</span>) <span class="text-purple-400">saturate</span>(<span class="text-orange-400">120%</span>);\n  <span class="text-blue-400">border-radius</span>: <span class="text-orange-400">1.25rem</span>;\n  <span class="text-blue-400">border</span>: <span class="text-orange-400">1px solid rgba(255, 255, 255, 0.08)</span>;\n  <span class="text-blue-400">box-shadow</span>: <span class="text-orange-400">0 20px 50px rgba(0, 0, 0, 0.4)</span>;\n  <span class="text-blue-400">transition</span>: <span class="text-orange-400">all 0.4s ease-in-out</span>;\n}\n\n<span class="text-yellow-400">.liquid-glass-card:hover</span> {\n  <span class="text-blue-400">border-color</span>: <span class="text-orange-400">rgba(var(--accent-rgb), 0.3)</span>;\n  <span class="text-blue-400">transform</span>: <span class="text-purple-400">translateY</span>(<span class="text-orange-400">-4px</span>);\n}`
+    },
     {
         filename: "index.html",
-        code: `<span class="text-gray-500">&lt;!-- Landing Hero --&gt;</span>\n<span class="text-red-400">&lt;section</span> <span class="text-yellow-400">class</span>=<span class="text-orange-400">"grid gap-8"</span><span class="text-red-400">&gt;</span>\n  <span class="text-red-400">&lt;h1&gt;</span>AI Automation Engineer<span class="text-red-400">&lt;/h1&gt;</span>\n  <span class="text-red-400">&lt;div</span> <span class="text-yellow-400">id</span>=<span class="text-orange-400">"app"</span><span class="text-red-400">&gt;&lt;/div&gt;</span>\n<span class="text-red-400">&lt;/section&gt;</span>`
-    },
-
-    {
-        filename: "agent.js",
-        code: `<span class="text-purple-400">const</span> deployButton = document.<span class="text-blue-400">querySelector</span>(<span class="text-orange-400">'.btn'</span>);\n\ndeployButton.<span class="text-blue-400">addEventListener</span>(<span class="text-orange-400">'click'</span>, () => {\n  <span class="text-purple-400">const</span> success = workflow.<span class="text-blue-400">launch</span>();\n  <span class="text-purple-400">if</span> (success) <span class="text-blue-400">console.log</span>(<span class="text-orange-400">'Deployed successfully!'</span>);\n});`
-    },
-
-
-    {
-        filename: "ai_agent.py",
-        code: `<span class="text-purple-400">from</span> langchain <span class="text-purple-400">import</span> OpenAI, RAG_Pipeline\n\n<span class="text-blue-400">def</span> <span class="text-green-400">analyze_document</span>(file_path):\n    llm = DeepSeek(model=<span class="text-orange-400">"reasoning"</span>, temp=<span class="text-orange-400">0.2</span>)\n    ctx = RAG_Pipeline.load_embeddings(file_path)\n    \n    <span class="text-purple-400">return</span> llm.generate_summary(context=ctx)\n\n<span class="text-gray-500"># Сгенерирован краткий отчет по BigData 📊</span>`
-    },
-
-    {
-        filename: "n8n_webhook.py",
-        code: `<span class="text-purple-400">import</span> requests, json\n\n<span class="text-blue-400">def</span> <span class="text-green-400">trigger_automation</span>(payload):\n    webhook_url = <span class="text-orange-400">"https://n8n.internal/v1/webhook"</span>\n    headers = {<span class="text-orange-400">"Content-Type"</span>: <span class="text-orange-400">"application/json"</span>}\n    \n    res = requests.post(webhook_url, json=payload)\n    <span class="text-purple-400">if</span> res.status_code == <span class="text-orange-400">200</span>:\n        print(<span class="text-orange-400">"Telegram Broadcast Sent! 🚀"</span>)`
-    },
-
-    {
-        filename: "GlassEffect.css",
-        code: `<span class="text-yellow-400">.premium-card</span> {\n  <span class="text-blue-400">background</span>: <span class="text-orange-400">rgba(255, 255, 255, 0.05)</span>;\n  <span class="text-blue-400">backdrop-filter</span>: <span class="text-purple-400">blur</span>(<span class="text-orange-400">12px</span>);\n  <span class="text-blue-400">-webkit-backdrop-filter</span>: <span class="text-purple-400">blur</span>(<span class="text-orange-400">12px</span>);\n  <span class="text-blue-400">border</span>: <span class="text-orange-400">1px solid rgba(255, 255, 255, 0.1)</span>;\n  <span class="text-blue-400">box-shadow</span>: <span class="text-orange-400">0 8px 32px 0 rgba(0, 0, 0, 0.3)</span>;\n}`
+        code: `<span class="text-gray-500">&lt;!-- Dynamic Portfolio Layout --&gt;</span>\n<span class="text-red-400">&lt;section</span> <span class="text-yellow-400">id</span>=<span class="text-orange-400">"portfolio"</span> <span class="text-yellow-400">class</span>=<span class="text-orange-400">"relative min-h-screen bg-gray-900"</span><span class="text-red-400">&gt;</span>\n  <span class="text-red-400">&lt;div</span> <span class="text-yellow-400">class</span>=<span class="text-orange-400">"max-w-7xl mx-auto px-6 py-24"</span><span class="text-red-400">&gt;</span>\n    <span class="text-red-400">&lt;div</span> <span class="text-yellow-400">class</span>=<span class="text-orange-400">"absolute top-0 right-0 w-96 h-96 bg-accent-500/10 blur-3xl"</span><span class="text-red-400">&gt;&lt;/div&gt;</span>\n    \n    <span class="text-red-400">&lt;div</span> <span class="text-yellow-400">class</span>=<span class="text-orange-400">"grid grid-cols-1 lg:grid-cols-2 gap-12"</span><span class="text-red-400">&gt;</span>\n      <span class="text-red-400">&lt;h2</span> <span class="text-yellow-400">class</span>=<span class="text-orange-400">"text-4xl font-extrabold text-white"</span><span class="text-red-400">&gt;</span>\n        Featured Automation Flows\n      <span class="text-red-400">&lt;/h2&gt;</span>\n      <span class="text-red-400">&lt;div</span> <span class="text-yellow-400">id</span>=<span class="text-orange-400">"projects"</span> <span class="text-yellow-400">class</span>=<span class="text-orange-400">"grid gap-6"</span><span class="text-red-400">&gt;&lt;/div&gt;</span>\n    <span class="text-red-400">&lt;/div&gt;</span>\n  <span class="text-red-400">&lt;/div&gt;</span>\n<span class="text-red-400">&lt;/section&gt;</span>`
     }
 ];
 
@@ -265,12 +259,12 @@ function typeEffect() {
                 currentTokenIndex++;
                 charIndex++;
                 codeElem.innerHTML = displayedText + '<span class="animate-pulse text-accent-500">|</span>';
-                setTimeout(typeEffect, Math.random() * 20 + 20); // Реалистичная скорость печати
+                setTimeout(typeEffect, Math.random() * 15 + 15); // Реалистичная скорость печати
             }
         } else {
             // Пауза после завершения печати текста
             isDeleting = true;
-            setTimeout(typeEffect, 2500);
+            setTimeout(typeEffect, 3000);
         }
     } else {
         // Удаление кода (происходит быстрее, целыми токенами)
